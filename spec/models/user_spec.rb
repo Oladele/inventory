@@ -40,6 +40,15 @@ describe User do
     it { should be_admin }
   end
 
+# => Don't understand why below does not work
+#  describe "accessible attributes" do
+ #   it "should not allow access to admin" do
+  #    expect do
+   #     @user.admin = false
+    #  end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    #end    
+  #end
+
   describe "when name is not present" do
     before { @user.name = " " }
     it { should_not be_valid }

@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
+
+  before_filter :signed_in_user_cannot_create, only: [:new, :create]
   
   def index
       #@users = User.all
@@ -67,5 +69,12 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def signed_in_user_cannot_create
+      if signed_in?
+        #store_location
+        redirect_to root_url, notice: "Invalid Action."
+      end
     end
 end
