@@ -2,11 +2,14 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  email           :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 require 'spec_helper'
@@ -27,6 +30,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:categories) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -145,5 +149,30 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "category associations" do
+
+    before { @user.save }
+    let!(:z_category) do 
+      FactoryGirl.create(:category, name: "category_z",user: @user)
+    end    
+
+    let!(:a_category) do 
+      FactoryGirl.create(:category, name: "category_a", user: @user)
+    end
+
+    it "should have the right category in the right order" do
+      @user.categories.should == [a_category, z_category]
+    end
+
+    it "should destroy associated categories" do
+      categories = @user.categories.dup
+      @user.destroy
+      categories.should_not be_empty
+      categories.each do |category|
+        
+      end
+    end
   end
 end

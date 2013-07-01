@@ -9,4 +9,15 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :category do
+    sequence(:name)  { |n| "myCategory #{n}" }
+    sequence(:description) { |n| "some description_#{n}"}   
+    user
+  end
+
+  factory :item do
+    barcode_custom "barcode"
+    category
+  end
 end

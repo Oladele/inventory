@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601181355) do
+ActiveRecord::Schema.define(:version => 20130630235117) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "categories", ["name", "user_id"], :name => "index_categories_on_name_and_user_id", :unique => true
+
+  create_table "items", :force => true do |t|
+    t.string   "barcode_custom"
+    t.integer  "category_id"
+    t.datetime "scan_datetime"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "items", ["barcode_custom"], :name => "index_items_on_barcode_custom", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name"
