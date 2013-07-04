@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
   has_many :categories, dependent: :destroy
+  has_many :items, through: :categories
   
   #before_save { |user| user.email = email.downcase }
   before_save { email.downcase! }

@@ -166,6 +166,11 @@ describe User do
       @user.categories.should == [a_category, z_category]
     end
 
+    it "should have the right category values" do
+      a_category.name.should  == "category_a"
+      a_category.can_destroy?.should == true
+    end
+
     it "should destroy associated categories" do
       categories = @user.categories.dup
       @user.destroy

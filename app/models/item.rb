@@ -17,5 +17,5 @@ class Item < ActiveRecord::Base
   validates :category_id, presence: true
   validates :barcode_custom, presence: true, length: { maximum: 40 }
 
-
+  default_scope order: 'items.barcode_custom DESC'
 end

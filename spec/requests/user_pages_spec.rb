@@ -62,12 +62,35 @@ describe "User pages" do
 	  # Code to make a user variable to be replaced with Factrory code
 	  #user = User.create( name: "first user", email: "1st@mail.com", password: "foobar", password_confirmation: "foobar")
 	  #user.save
-	  let(:user) { FactoryGirl.create(:user) }
-	  
+	  let!(:user) { FactoryGirl.create(:user, name: "user1") }
+
+    let!(:a_category) { FactoryGirl.create(:category, user: user, name: "a_category") }
+
+    let!(:b_category) { FactoryGirl.create(:category, user: user, name: "b_category") }
+    
+    let!(:item_a1) { FactoryGirl.create(:item, category: a_category, barcode_custom: "a_category-001") }
+
+    let!(:item_a2) { FactoryGirl.create(:item, category: a_category, barcode_custom: "a_category-002") }
+
+    let!(:item_b1) { FactoryGirl.create(:item, category: b_category, barcode_custom: "b_category-001") }
+
 	  before { visit user_path(user) }
 
 	  it { should have_selector('h1',    text: user.name) }
 	  it { should have_selector('title', text: user.name) }
+
+    its "categories and items should have the right category values" do
+      user.name.should == "user1"
+      user.categories.first.name.should == "a_category"
+      user.categories.first.items.first.barcode_custom == "a_category-001"
+    end
+
+    describe "items" do
+      it { should have_content(item_a1.barcode_custom) }
+      it { should have_content(item_a2.barcode_custom) }
+      it { should have_content(item_b1.barcode_custom) }
+      it { should have_content(user.items.count) }
+    end
 	end
 
 	describe "signup" do

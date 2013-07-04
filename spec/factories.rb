@@ -11,8 +11,8 @@ FactoryGirl.define do
   end
 
   factory :category do
-    sequence(:name)  { |n| "myCategory #{n}" }
-    sequence(:description) { |n| "some description_#{n}"}   
+    sequence(:name) { |n| "category #{n}" }
+    description "some description"
     user
   end
 

@@ -65,7 +65,7 @@ describe Category do
     end
 
     it "should return have the right items in the right order" do
-	      @category.items.should == [item1, item2]
+	      @category.items.should == [item2, item1]
 	  end
 
 	  it "should return FALSE for category.can_destroy" do

@@ -23,7 +23,7 @@ class Category < ActiveRecord::Base
   before_destroy :check_dependent_records
 
   def can_destroy?
-    FALSE unless self.items.count == 0
+    self.items.count == 0 ? true:false 
   end
 
   private
