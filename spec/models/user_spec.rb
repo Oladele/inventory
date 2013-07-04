@@ -171,13 +171,46 @@ describe User do
       a_category.can_destroy?.should == true
     end
 
+=begin
     it "should destroy associated categories" do
       categories = @user.categories.dup
       @user.destroy
       categories.should_not be_empty
       categories.each do |category|
-        
+        category.find_by_id(micropost.id).should be_nil
+      end
+    end
+=end
+  end
+
+  describe "item associations" do
+    
+    before { @user.save }
+    let!(:a_item1) do 
+      FactoryGirl.create(:item, barcode_custom: "a_item1",user: @user)
+    end    
+
+    let!(:a_item2) do 
+      FactoryGirl.create(:item, barcode_custom: "a_item2",user: @user)
+    end
+
+    it "should have the right category in the right order" do
+      @user.items.should == [a_item2, a_item1]
+    end
+
+    it "should have the right category values" do
+      a_item1.barcode_custom.should  == "a_item1"
+      a_item2.barcode_custom.should  == "a_item2"
+    end
+
+    it "should destroy associated items" do
+      items = @user.items.dup
+      @user.destroy
+      items.should_not be_empty
+      items.each do |item|
+        Item.find_by_id(item.id).should be_nil
       end
     end
   end
+
 end

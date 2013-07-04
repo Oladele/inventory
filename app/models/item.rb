@@ -11,10 +11,11 @@
 #
 
 class Item < ActiveRecord::Base
-  attr_accessible :barcode_custom, :scan_datetime
-  belongs_to :category
+  attr_accessible :barcode_custom, :scan_datetime, :category_id
+  belongs_to :user
 
-  validates :category_id, presence: true
+  #validates :category_id, presence: true
+  validates :user_id, presence: true
   validates :barcode_custom, presence: true, length: { maximum: 40 }
 
   default_scope order: 'items.barcode_custom DESC'

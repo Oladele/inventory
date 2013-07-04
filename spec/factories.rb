@@ -18,6 +18,6 @@ FactoryGirl.define do
 
   factory :item do
     barcode_custom "barcode"
-    category
+    user
   end
 end

@@ -53,30 +53,4 @@ describe Category do
     it { should_not be_valid }
   end
 
-  describe "category associations" do
-
-    before { @category.save }
-    let!(:item1) do 
-      FactoryGirl.create(:item, barcode_custom: "barcode1", category: @category)
-    end
-
-    let!(:item2) do 
-      FactoryGirl.create(:item, barcode_custom: "barcode2", category: @category)
-    end
-
-    it "should return have the right items in the right order" do
-	      @category.items.should == [item2, item1]
-	  end
-
-	  it "should return FALSE for category.can_destroy" do
-	      @category.can_destroy?.should == FALSE
-	  end
-
-	  it "should raise error when deleting Category with Items" do
-	  	lambda do
-	      @category.destroy
-	    end.should raise_error(RuntimeError)
-	  end
-	end
-
 end
