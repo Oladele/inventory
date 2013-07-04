@@ -16,7 +16,7 @@ describe Item do
 	let(:user) { FactoryGirl.create(:user) }
   before do
   	@category = user.categories.create(name: "book", description: "readable")
-  	@item = @category.items.create(barcode_custom: "book123")
+  	@item = user.items.create(barcode_custom: "book123")
   end
 
   subject { @item }
@@ -24,22 +24,23 @@ describe Item do
   it { should respond_to(:barcode_custom) }
   it { should respond_to(:category_id) }
   it { should respond_to(:scan_datetime) }
+  it { should respond_to(:user_id) }
 
-  it { should respond_to(:category) }
-	its(:category) { should == @category }
+  it { should respond_to(:user) }
+	its(:user) { should == user }
 
   it { should be_valid }
 
   describe "accessible attributes" do
     it "should not allow access to user_id" do
       expect do
-        Item.new(category_id: @category.id)
+        Item.new(user_id: user.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end    
   end
 
-  describe "when category_id is not present" do
-    before { @item.category_id = nil }
+  describe "when user_id is not present" do
+    before { @item.user_id = nil }
     it { should_not be_valid }
   end
 

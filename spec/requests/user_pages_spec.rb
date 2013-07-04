@@ -68,11 +68,11 @@ describe "User pages" do
 
     let!(:b_category) { FactoryGirl.create(:category, user: user, name: "b_category") }
     
-    let!(:item_a1) { FactoryGirl.create(:item, category: a_category, barcode_custom: "a_category-001") }
+    let!(:item_a1) { FactoryGirl.create(:item, user: user, barcode_custom: "a_category-001") }
 
-    let!(:item_a2) { FactoryGirl.create(:item, category: a_category, barcode_custom: "a_category-002") }
+    let!(:item_a2) { FactoryGirl.create(:item, user: user, barcode_custom: "a_category-002") }
 
-    let!(:item_b1) { FactoryGirl.create(:item, category: b_category, barcode_custom: "b_category-001") }
+    let!(:item_b1) { FactoryGirl.create(:item, user: user, barcode_custom: "b_category-001") }
 
 	  before { visit user_path(user) }
 
@@ -82,7 +82,7 @@ describe "User pages" do
     its "categories and items should have the right category values" do
       user.name.should == "user1"
       user.categories.first.name.should == "a_category"
-      user.categories.first.items.first.barcode_custom == "a_category-001"
+      user.items.first.barcode_custom == "a_category-001"
     end
 
     describe "items" do
